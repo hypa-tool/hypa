@@ -1,0 +1,48 @@
+[systems]
+[ts1, ts2]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+The example program from Figure 3 in [Software Verification of Hyperproperties beyond k-safety, Raven Beutner and Bernd Finkbeiner, CAV 2022].
+The first program is 
+
+a = 0 
+repeat {
+    x = \star 
+    while \star do {
+        x = x + 1
+    }
+    y = x
+    while (y > 0) do {
+        y = y - 1
+        a = a + x
+    }
+}
+
+and the second program is 
+
+a = 0 
+repeat {
+    x = \star 
+    y = x
+    while (y > 0) do {
+        y = y - 1
+        a = a + x
+    }
+}
+
+We show that the first program refines the second, i.e., all behavior of the first is also possible in the second (when observed at the repeat location), i.e., 
+\forall \pi_1. \exists \pi_2. G (a_(\pi_1) = a_(\pi_2))
+
+This requires a non-trivial coordination of scheduling and witness strategy. 
+In particular, the verifier needs to wait for the first loop in the first program to finish before scheduling the second copy. 
+
+Name of the benchmark in the paper: Figure 3

@@ -1,0 +1,31 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+Program P1 taken from [A Temporal Logic for Strategic Hyperproperties, Raven Beutner and Bernd Finkbeiner, CONCUR 2021] and extended with variables from infinite domains.
+The program is the following
+
+o = 0
+repeat {
+    h = \star
+    if (h > 0) then {
+        o = -o
+
+    } else {
+        o = -o + (h - h)
+    }
+}
+
+We verify that for all execution there exists one with the same output but flipped high-security inputs, i.e., 
+\forall \pi_1. \exists \pi_2. o_(\pi_1) = o_(\pi_2) \land h_(\pi_2) = - h_(\pi_1)
+
+Name of the benchmark in the paper: P1_Simple

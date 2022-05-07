@@ -1,0 +1,28 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+The program does the following (where \star is a non-deterministic choice)
+
+o := 0
+repeat
+    if (h > 5) then 
+        o = o + \star
+    else 
+        t = o + \star 
+        o = t
+
+i.e., it branches on the value of h and either updates the value of o directly or via a temporary variable.
+We verify that at for all execution there exists one that agrees on the value of o (whenever at the repeat instruction). 
+As the value of h is not chosen non-deterministically, the existential copy can not choose which path to take but only the value with which we update. 
+
+Name of the benchmark in the paper: AsynchGNI

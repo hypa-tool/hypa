@@ -1,0 +1,17 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example adapted from [Reductions for safety proofs, Azadeh Farzan and Anthony Vandikas, POPL 2020]
+See https://github.com/weaver-verifier/weaver/blob/master/examples/popl20/counter-determinism.wvr
+
+Name of the benchmark in the paper: Counter-Det

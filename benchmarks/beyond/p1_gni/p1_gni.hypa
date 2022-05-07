@@ -1,0 +1,35 @@
+[systems]
+[ts, ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 1)
+
+[preds]
+preds
+
+[comment]
+Program P1 taken from [A Temporal Logic for Strategic Hyperproperties, Raven Beutner and Bernd Finkbeiner, CONCUR 2021] and extended with variables from infinite domains.
+The program is the following
+
+o = 0
+repeat {
+    h = \star
+    if (h > 0) then {
+        o = -o
+
+    } else {
+        o = -o + (h - h)
+    }
+}
+
+We verify that this program satisfies GNI, i.e., 
+\forall \pi_1. \forall \pi_2. \exists \pi_3. h_(\pi_3) = h_(\pi_1) \land o_(\pi_3) = o_(\pi_2)
+
+Language-based approaches would struggle with this example as (syntactically) h appears in the update of o.
+The semantic analysis of HyPA can easily proof that, despite the syntactic occurrence, h has no impact on the value of o.  
+
+Name of the benchmark in the paper: P1_GNI
+

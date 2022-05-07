@@ -1,0 +1,19 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example program, taken from [Constraint-based Relational Verification, Hiroshi Unno, Tachio Terauchi, Eric Koskinen, CAV 2021].
+Similar to double_square_ni but the value of h is already fixed.
+
+See https://github.com/hiroshi-unno/coar/blob/main/benchmarks/cav2021rel/DoubleSquareNI_hFF.clp
+
+Name of the benchmark in the paper: DoubleSquareNIff

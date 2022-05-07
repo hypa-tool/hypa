@@ -1,0 +1,31 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example program, adapted from [Property Directed Self Composition, Ron Shemer, Arie Gurfinkel, Sharon Shoham, Yakir Vizel, CAV 2019].
+In pseudo code with pre and post conditions this programs is the following:
+
+pre(a1 < a2 && b2 < b1 )
+
+squaresSum(int a, int b){
+    assume(0 < a < b);
+    int c=0;
+    while (a<b) {
+        c+=1; a++;
+    }
+    return c;
+}
+
+post(c2 < c1)
+
+
+Name of the benchmark in the paper: SquaresSum

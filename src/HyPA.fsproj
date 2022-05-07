@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Util.fs" />
+    <Compile Include="GlobalConstants.fs" />
+    <Compile Include="GraphUtil.fs" />
+    <Compile Include="Term.fs" />
+    <Compile Include="TermParser.fs" />
+    <Compile Include="TransitionSystem.fs" />
+    <Compile Include="Abstraction.fs" />
+    <Compile Include="SMTUtil.fs" />
+    <Compile Include="DNF.fs" />
+    <Compile Include="BooleanClosure.fs" />
+    <Compile Include="Automaton.fs" />
+    <Compile Include="SuccessorHelper.fs" />
+    <Compile Include="StateSatComputer.fs" />
+    <Compile Include="ImplicationTest.fs" />
+    <Compile Include="GuardSatTest.fs" />
+    <Compile Include="SuccessorComputation.fs" />
+    <Compile Include="ReductionGraph.fs" />
+    <Compile Include="SafetyGame.fs" />
+    <Compile Include="KSafetyGameConstructor.fs" />
+    <Compile Include="BeyondGameConstructor.fs" />
+    <Compile Include="Parser.fs" />
+    <Compile Include="ModelChecker.fs" />
+    <Compile Include="SafetyGame.fs" />
+    <Compile Include="CommandLineParser.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="FParsec" Version="1.1.1" />
+  </ItemGroup>
+</Project>

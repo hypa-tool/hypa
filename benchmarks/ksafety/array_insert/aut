@@ -1,0 +1,21 @@
+[states]
+{0, 1, 2}
+
+[initial]
+{0}
+
+[bad]
+{2}
+
+[vars]
+{len_0, h_0, i_0, len_1, h_1, i_1}
+
+[edges]
+0:
+    {
+        ((and (= len_0 len_1) (>= len_0 0)), 1)
+    }
+1:
+    {
+        ((not (and (<= i_0 len_0) (<= i_1 len_1) (= i_0 i_1))), 2)
+    }

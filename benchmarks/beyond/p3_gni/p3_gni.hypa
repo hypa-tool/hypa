@@ -1,0 +1,34 @@
+[systems]
+[ts, ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 1)
+
+[preds]
+preds
+
+[comment]
+Program P3 adapted from [A Temporal Logic for Strategic Hyperproperties, Raven Beutner and Bernd Finkbeiner, CONCUR 2021] and extended with variables from infinite domains.
+The program is the following
+
+o = 0
+repeat {
+    h = \star
+    if \star then {
+        o = 1
+    } else {
+        o = 2
+    }
+}
+
+We verify that this program satires GNI (when observed at the repeat location), i.e., 
+\forall \pi_1. \forall \pi_2. \exists \pi_3. o_(\pi_3) = o_(\pi_1) \land h_(\pi_3) = h_(\pi_2)
+
+This program is secure (satisfies GNI) but does not satisfy normal non-interference as the output of the program is not consistent, i.e., same low security inputs (of which there are none), do not imply that the output is identical.
+The program does however, satisfy GNI as the high-security input (h) has no impact on the output. 
+
+
+Name of the benchmark in the paper: P3_GNI

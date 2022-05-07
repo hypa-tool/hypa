@@ -1,0 +1,18 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example program, taken from [Property Directed Self Composition, Ron Shemer, Arie Gurfinkel, Sharon Shoham, Yakir Vizel, CAV 2019].
+As the original program uses arrays (currently not supported by HyPA) we use the the approximation already used in [Constraint-based Relational Verification, Hiroshi Unno, Tachio Terauchi, Eric Koskinen, CAV 2021].
+See https://github.com/hiroshi-unno/coar/blob/main/benchmarks/cav2021rel/ArrayInsert.clp.
+
+Name of the benchmark in the paper: ArrayInsert

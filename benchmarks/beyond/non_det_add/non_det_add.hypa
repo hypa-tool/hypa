@@ -1,0 +1,33 @@
+[systems]
+[ts1, ts2]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+Models the genzilation of an icrease. The first program is
+
+o = 0
+repeat 
+    if \star then {
+        o = o + 1
+    } else {
+        o = o + 2
+    }
+
+and the second program is 
+
+o = 0
+repeat 
+    x = \star 
+    o = o + x
+
+We verify that the first program refines the second, i.e., all behavior of the first is also possible in the second (when observing the value of o at the repeat location), i.e., 
+
+Name of the benchmark in the paper: NonDetAdd

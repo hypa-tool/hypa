@@ -1,0 +1,18 @@
+[states]
+{0, 1}
+
+[initial]
+{0}
+
+[bad]
+{1}
+
+[vars]
+{x_0, x_1}
+
+[edges]
+0:
+    {
+        (true, 0)
+        ((not (<= x_1 x_0)), 1)
+    }

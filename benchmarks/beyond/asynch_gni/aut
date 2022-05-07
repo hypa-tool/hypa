@@ -1,0 +1,19 @@
+[states]
+{0, 1}
+
+[initial]
+{0}
+
+[bad]
+{1}
+
+[vars]
+{o_0, o_1}
+
+[edges]
+0: 
+    {
+        (true, 0)
+        ((not (= o_1 o_0)), 1)
+    }
+

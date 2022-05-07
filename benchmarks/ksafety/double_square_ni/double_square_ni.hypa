@@ -1,0 +1,36 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example program, taken from [Property Directed Self Composition, Ron Shemer, Arie Gurfinkel, Sharon Shoham, Yakir Vizel, CAV 2019].
+In pseudo code with pre and post conditions this programs is the following:
+
+pre(x1 == x2)
+
+doubleSquare(bool h, int x){
+    int z, y=0;
+    if(h) { z = 2*x; } else { z = x; }
+    while (z>0) {
+        z--;
+        y = y+x;
+    }
+
+    if(!h) { 
+        y = 2*y; 
+    }
+
+    return y;
+}
+post(y1 == y2)
+
+
+Name of the benchmark in the paper: DoubleSquareNI

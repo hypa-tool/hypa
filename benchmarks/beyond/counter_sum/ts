@@ -1,0 +1,23 @@
+[vars]
+{x, a}
+
+[locations]
+{0, 1}
+
+[init] 
+(0: true)
+
+[step]
+0:
+    {
+        (true, [a := 0], [x|], 1)
+    }
+
+1: 
+    {
+        (true, [a := (+ a x)], [|], 1)
+    }
+
+
+[obs] 
+(1: true)

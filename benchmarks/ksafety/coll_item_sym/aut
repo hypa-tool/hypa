@@ -1,0 +1,22 @@
+[states]
+{0, 1, 2}
+
+[initial]
+{0}
+
+[bad]
+{2}
+
+[vars]
+{cs_0, cr_0, ci_0, ct_0, ccs_0, ccr_0, cci_0, cct_0, res_0, cs_1, cr_1, ci_1, ct_1, ccs_1, ccr_1, cci_1, cct_1, res_1}
+
+
+[edges]
+0:
+    {
+        ((and (= cs_0 ccs_1) (= cr_0 ccr_1) (= ci_0 cci_1) (= ct_0 cct_1) (= ccs_0 cs_1) (= ccr_0 cr_1) (= cci_0 ci_1) (= cct_0 ct_1) ), 1)
+    }
+1:
+    {
+        ((not (or (and (= res_0 0) (= res_1 0)) (and (< res_0 0) (> res_1 0)) (and (> res_0 0) (< res_1 0)))), 2)
+    }

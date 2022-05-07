@@ -1,0 +1,24 @@
+[systems]
+[ts, ts,ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 1)
+
+[preds]
+preds
+
+[comment]
+Models a counter tha increases (or decreases) by a non-deterministically chosen step size.
+
+a = 0
+x = \star 
+repeat 
+    a = a + x
+
+We very that for all executions, there exists some with the negated value (when observed at the repeat location), i.e.,
+\forall \pi_1. \exists \pi_2. a_(\pi_2) = - a_(\pi_1)
+
+Name of the benchmark in the paper: CounterDiff

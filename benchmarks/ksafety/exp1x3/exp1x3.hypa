@@ -1,0 +1,17 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example taken from [Reductions for safety proofs, Azadeh Farzan and Anthony Vandikas, POPL 2020].
+See https://github.com/weaver-verifier/weaver/blob/master/examples/bench/exp1x3.wvr
+
+Name of the benchmark in the paper: Exp1x3

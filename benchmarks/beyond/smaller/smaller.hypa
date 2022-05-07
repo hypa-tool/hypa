@@ -1,0 +1,30 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+Consider the following program:
+
+x = 0 
+repeat {
+    if \star then {
+        x = x + 1
+    } else {
+        x = 2 * x
+    }
+}
+
+We verify that for every execution the exists one, where the value of x is always smaller or equal, i.e., 
+\forall \pi_1. \exists \pi_2. G (x_(\pi_2) <= x_(\pi_2))
+
+To verify this, the scheduler needs to pick the program path where the value is always decrement by less than on the other path (by e.g., copying the values of h).
+
+Name of the benchmark in the paper: Smaller

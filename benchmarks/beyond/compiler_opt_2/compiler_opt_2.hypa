@@ -1,0 +1,36 @@
+[systems]
+[ts1, ts2]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+Models a complier optimization that removes a conditional.
+The source program is 
+
+o := 0
+repeat 
+    if (t > 0) then {
+        x = x + \star
+    } else {
+        t = \star
+    }
+
+and the target program is 
+
+o := 0
+repeat 
+    o = 0 + \star
+
+
+i.e., we eliminate the conditional.
+
+We verify that all behavior of the first program (the values of o) is also possible in the second. 
+
+Name of the benchmark in the paper: CompilerOpt2

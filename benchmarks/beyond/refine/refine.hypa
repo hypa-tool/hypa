@@ -1,0 +1,33 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(1, 1)
+
+[preds]
+preds
+
+[comment]
+Verification of a simple refinement property.
+The program is 
+
+if \star then {
+    x = 0
+    c = 0
+    while true do {
+        x = x + 1
+    }
+} else {
+    x = 0
+    c = 1
+    while true do {
+        x = x + \star
+    }
+}
+
+We show that every execution in the first branch (where c is set to 0) refines on of the second branch (where c is set to 1).
+
+Name of the benchmark in the paper: Refine

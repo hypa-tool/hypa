@@ -1,0 +1,43 @@
+[vars]
+{cs, cr, ci, ct, ccs, ccr, cci, cct, res}
+
+[locations]
+{0, 1, 2, 3, 4}
+
+[init] 
+(0: (= res 0)) 
+
+
+[step]
+0:
+    {
+        (true, [res := (- cs ccs)], [|], 1)
+    }
+
+1:
+    {
+        ((= res 0), [res := (- cr ccr)], [|], 2)
+        ((not (= res 0)), [], [|], 2)
+    }
+
+2:
+    {
+        ((= res 0), [res := (- ci cci)], [|], 3)
+        ((not (= res 0)), [], [|], 3)
+    }
+
+3:
+    {
+        ((= res 0), [res := (- ct cct)], [|], 4)
+        ((not (= res 0)), [], [|], 4)
+    }
+
+4:
+    {
+        (true, [],[|], 4)
+    }
+
+[obs]
+(0: true)
+(4: true)
+

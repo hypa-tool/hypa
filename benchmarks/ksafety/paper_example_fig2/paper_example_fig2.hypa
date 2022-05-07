@@ -1,0 +1,42 @@
+[systems]
+[ts1, ts2]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+The example program from Figure 2 in [Software Verification of Hyperproperties beyond k-safety, Raven Beutner and Bernd Finkbeiner, CAV 2022].
+
+Consider the first program:
+
+x = 1 
+repeat {
+    y = 2x
+    while (y > 0) do {
+        y = y - 1
+        x = 2x
+    }
+}
+
+and the second program 
+
+x = 1 
+repeat {
+    y = x
+    while (y > 0) do {
+        y = y - 1
+        x = 4x
+    }
+}
+
+We verify that the value of x is the same across two executions of this program.
+As shown in [Software Verification of Hyperproperties beyond k-safety, Raven Beutner and Bernd Finkbeiner, CAV 2022], this requires a non lock-step scheduling to work with linear predicates. 
+
+
+Name of the benchmark in the paper: Figure 2

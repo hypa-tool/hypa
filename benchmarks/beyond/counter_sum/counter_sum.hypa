@@ -1,0 +1,24 @@
+[systems]
+[ts, ts,ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 1)
+
+[preds]
+preds
+
+[comment]
+Models a counter tha increases (or decreases) by a non-deterministically chosen step size (identical to counter_diff).
+
+a = 0
+x = \star 
+repeat 
+    a = a + x
+
+We very that for all two executions, there exists one in which the value is always the sum of the those in the two previous executions (when observed at the repeat location), i.e.,
+\forall \pi_1. \forall \pi_2. \exists \pi_3. a_(\pi_3) = a_(\pi_1) + a_(\pi_2)
+
+Name of the benchmark in the paper: CounterSum

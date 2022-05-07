@@ -1,0 +1,35 @@
+[systems]
+[ts, ts]
+
+[automaton]
+aut
+
+[qs]
+(2, 0)
+
+[preds]
+preds
+
+[comment]
+Example program, taken from [Property Directed Self Composition, Ron Shemer, Arie Gurfinkel, Sharon Shoham, Yakir Vizel, CAV 2019].
+In pseudo code with pre and post conditions this programs is the following:
+
+pre(low1 == low2 )
+
+halfSquare(int h, int low){
+    assume(low > h > 0);
+    int i = 0, y = 0, v = 0
+    while (h > i) {
+        i++; y += y;
+    }
+    v = 1;
+    while (low > i) {
+        i++; y += y;
+    }
+    return y;
+}
+
+post(y1 == y2)
+
+
+Name of the benchmark in the paper: HalfSquareNI
