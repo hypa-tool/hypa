@@ -1,14 +1,15 @@
-# HyPA: Software Verification of Hyperproperties beyond k-safety
+# HyPA: Hyperproperty Verification with Predicate Abstraction Beyond k-safety 
 
 This repository contains HyPA (short for **Hy**perproperties **P**redicate **A**bstraction), a tool that can verify `\forall^*\exists^*` hyperproperties on infinite-state systems within a given (predicate) abstraction.
 It builds on the theory presented in 
-> Beutner and Finkbeiner. Software Verification of Hyperproperties beyond k-safety. CAV 2022 [1]
+> Raven Beutner and Bernd Finkbeiner. Software Verification of Hyperproperties beyond k-safety. CAV 2022 [1]
 
 
 ## HyPA Overview
 
 HyPA is a tool that can verify hyperproperties on infinite-state systems.
-It specializes on `\forall^k\exists^l` safety hyperproperties (for some k, l) which state that for all k traces there exist l traces such that the resulting k+l traces do not interact badly. 
+It specializes on `\forall^k\exists^l` safety hyperproperties (for some `k`, `l`) which state that for all `k` traces there exist `l` traces such that the resulting `k+l` traces do not interact badly. 
+k-safety properties are the *special case* where `l = 0`. 
 
 HyPA reads a symbolic transition system, the hyperproperty to be checked, and a set of predicates and determines if the property can be verified within the given abstraction.
 To this end, HyPA uses the provided predicates to construct an abstraction of the system (parametrized by the scheduling in each step)and turns the abstraction into a game which is subsequently solved.
@@ -18,7 +19,7 @@ As shown in [1], if the safety player wins the constructed game, the system sati
 
 - `src/` contains the source code of HyPA written in F#.
 - `benchmarks/` contains the benchmarks used in [1] to evaluate HyPA.
-- `app/` is the target folder for the build. It contains a `config.conf` file that should point to a local Z3 installation (see Section [Build From Sources](#build-from-sources)).
+- `app/` is the target folder for the build. It contains a `config.conf` file that should point to a local Z3 installation (see Section [Build and Connect Z3](#build-and-connect-z3s)).
 
 ## Build And Run HyPA
 
@@ -46,12 +47,12 @@ In particular, to copy the executable, you need to copy the entire contents of t
 
 HyPA requires the [Z3](https://github.com/Z3Prover/z3) SMT solver. 
 HyPA is designed such that it only needs to the *path* to the Z3 executable, so everyone can install Z3 whereever it fits them best.
-Either build Z3 yourself or download a prebuild binary for your architecture (see [here](https://github.com/Z3Prover/z3/releases)).
+Either build Z3 yourself or download a prebuilt binary for your architecture (see [here](https://github.com/Z3Prover/z3/releases)).
 
 The absolute path to Z3 is specified in the `config.conf` configuration file.
 This file **must** be located in the same directors as the HyPA executable (this convention makes it easy to find the config file, independent of the relative path HyPA is called from).
 We already provide a config file `app/config.conf`.
-After having build (or downloaded) Z3, fill the **absolute** path to the Z3 solver in the `config.conf` file.
+After having built (or downloaded) Z3, paste the **absolute** path to the Z3 solver into the `config.conf` file.
 For example, if the Z3 binary is `/usr/bin/z3`, change the content of `app/config.conf` to 
 
 ```
@@ -62,7 +63,7 @@ For example, if the Z3 binary is `/usr/bin/z3`, change the content of `app/confi
 
 ### Run HyPA
 
-After having build HyPA and set the path to the Z3 solver, invoke HyPA by running
+After having built HyPA and set the path to the Z3 solver, invoke HyPA by running
  
 ```shell
 ./app/HyPA -i inputfile.hypa
@@ -88,8 +89,8 @@ Further examples are located in the `benchmarks/` folder.
 
 HyPA supports several command line options.
 
-- `-i` sets the path to the verification instance (usually this is a `.hypa` file). The file then points to the system, property and predicates that should be used for this instance. This option is mandatory. See Section [Hypa File](#hypa-file) below, for details on the structure of the `.hypa` file.
-- `-v` determines the intermediate level of output of HyPA. The available values are 0 (only output the result), 1 (output the data used for evaluation in [1]), 2 (output the result as well as intermediate steps), 3 (debug output). The `-v` option is optional. If not used, the verbosity level is set to 2 by default. 
+- `-i` sets the path to the verification instance (usually this is a `.hypa` file). The `.hypa` file then points to the system, property and predicates that should be used for this instance. This option is mandatory. See Section [Hypa File](#hypa-file) below, for details on the structure of the `.hypa` file.
+- `-v` determines the verbosity level of HyPA. The available options are 0 (only output the result), 1 (output the data used for evaluation in [1]), 2 (output the result as well as intermediate steps), and 3 (debug output). The `-v` option is optional. If not used, the verbosity level is set to 2 by default. 
 - `-s` sets the solver used by HyPA to solve games for `\forall^*\exists^*` instances (i.e., instances beyond k-safety). Available options are `naive` (to use the naive solver) and `lazy` (to use the more efficient lazy solver, presented in [1]). The `-s` option is optional. If not used, the `lazy` solver is used by default. The solver option is only relevant for properties that use existential quantification, i.e., properties of the form `\forall^k\exists^l` with `l >= 1`. The (default) `lazy` solver is always superior to the `naive` solver, so there is seldom a reason to make use of the `-s` option. 
 
 
@@ -198,11 +199,11 @@ Lastly `t` is the target location of that transition.
 
 It should be straightforward to map the above STS to the pseudo program.
 
-Lastly, `[obs]` defines the points at which the program execution is observed (see the definition of OHyperLTL in [1]). The definition is similar to that used for `[init]`. In this case, we observe the program whenever in location 1 (as the formula is set to `true`). 
+Lastly, `[obs]` defines the points at which the program execution is observed in our logic (see the definition of OHyperLTL in [1]). Using `[obs]` is analogous to the use of `[init]`. In our example, we observe the program whenever in location 1 (as the formula is set to `true`). 
 
 #### Specification of Safety Automata
 
-We consider the LTL specification `(x_0 = x_1) => G (x_0 = x_1)`, where `x_0` refers to the value of `x` in the program bound to the first trace (resolved on `ts1`) and analogously for `x_1`.
+We consider the LTL specification `(x_0 = x_1) => G (x_0 = x_1)`, where `x_0` refers to the value of `x` in the program bound to the first trace (resolved on `ts1`) and `x_1` to the value of `x` in the second trace.
 See the example in [1].
 We represent this formula as a safety automaton. 
 The content of `aut` is the following:
@@ -239,8 +240,8 @@ We specify a set of states (`[states]`) a set of initial states (`[initial]`) an
 We also include the set of variables used (`[vars]`).
 Similar to the definition of a STS, the edges of an automaton are given per state.
 An edges has the form `(g, t)` where `g` is a guard ranging over those variables appearing in `[vars]` and `t` is the target state of that transition.
-Note that in an STS all formulas range over variables in that system, whereas the variables in the automaton are annotated by a number that indicates to which copy it refers (i..e, variables of the form `x_i`)
-A automaton accepts a word (a sequence of assignments to the variables), if there exists no run that visits a bad state (see [1]).
+Note that in an STS all formulas range over variables in that system, whereas the variables in the automaton are annotated by a number that indicates to which copy it refers (i.e, variables have the form `x_i`).
+An automaton accepts a word (a sequence of assignments to the variables), if there exists *no* run that visits a bad state (see [1]).
 
 #### Specification of Predicates
 
@@ -266,7 +267,7 @@ In our example, `preds` contains the following:
 
 For a location in the product (e.g., the location `[1 1]` is the state where both instances are in location 1), we assign a set of predicates (separated by a comma).
 For states not appearing, the set of predicates is empty.
-It is possible to group multiple product locations together and thus specifying predicates for multiple locations at once.
+It is possible to group multiple product locations together and thus specify predicates for multiple locations at once.
 For example
 
 ```
@@ -279,9 +280,9 @@ For example
 sets the predicates for locations `[0 0]` and `[1 1]` at the same time. 
 
 We require that the predicates are precise enough to describes the initial conditions (the formulas used in the `[init]` block of the transition system), the observation formulas (the formulas used in the `[obs]` block of the transition system), and the formulas used in the automaton edges (see [1]).
-If the predicates are not precise enough at some location, HyPA will raise an error.
+If the predicates are not precise enough at some location, HyPA will raise an error during evaluation. 
 
 
 ## References
 
-[1] Beutner and Finkbeiner. Software Verification of Hyperproperties beyond k-safety. CAV 2022
+[1] Raven Beutner and Bernd Finkbeiner. Software Verification of Hyperproperties beyond k-safety. CAV 2022
