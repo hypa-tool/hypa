@@ -112,7 +112,7 @@ let main argv =
 
     // =========================== Determinize the safety automaton  ======================================
     if List.contains EachStep GlobalConstants.verboseLevel then 
-        printf "Determeinize Automaton..."
+        printf "Determinize Safety Automaton..."
     // Determinize the safety automaton
     let detA = Automaton.convertToDSA config.Automaton
     sw.Stop()
@@ -124,14 +124,14 @@ let main argv =
 
     // =========================== Check if Transition System and Automaton are consistent ======================================
     if List.contains EachStep GlobalConstants.verboseLevel then 
-        printf "Checking syntactic consistentcy...."
+        printf "Checking syntactic consistency...."
 
     if tslist |> List.exists (fun ts -> ts.IsConsitent |> not) then 
-        printfn "The Transition systems are not consistent"
+        printfn "The transition systems are not consistent"
         exit 0 
 
     if detA.IsConsitent |> not then 
-        printfn "The Automaton is not consistent"
+        printfn "The automaton is not consistent"
         exit 0 
 
     let varsA = 

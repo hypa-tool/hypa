@@ -92,7 +92,7 @@ let parseCommandLineArguments (args : list<String>) =
                                         | 0 -> parseArgumentsRec ys { opt with VerboseLevel = Some GlobalConstants.VerbosityLevel.ResultOnly }
                                         | 1 -> parseArgumentsRec ys { opt with VerboseLevel = Some GlobalConstants.VerbosityLevel.OutputForPaper }
                                         | 2 -> parseArgumentsRec ys { opt with VerboseLevel = Some GlobalConstants.VerbosityLevel.EachStep }
-                                        | 3-> parseArgumentsRec ys { opt with VerboseLevel = Some GlobalConstants.VerbosityLevel.DebugOutput }
+                                        | 3 -> parseArgumentsRec ys { opt with VerboseLevel = Some GlobalConstants.VerbosityLevel.DebugOutput }
                                         | _ -> Result.Error ("Unsupported Verbosity Level: " + y)
                                 with _ -> Result.Error ("Unsupported Verbosity Level: " + y)
 

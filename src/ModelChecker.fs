@@ -216,12 +216,12 @@ let private checkBeyondDirect (tslist : list<TransitionSystem>) k l (predMap : P
                     printfn "Cumulative time to construct abstraction and solve game: %i ms" (sw.ElapsedMilliseconds + swReductionGraph.ElapsedMilliseconds)
 
                 if List.contains OutputForPaper GlobalConstants.verboseLevel then 
-                    printfn "| Size=%i | t_abs=%i ms | #Ref=%i | t_refine=%i ms | t_total=%i ms |" sg.States.Count swReductionGraph.ElapsedMilliseconds iterations sw.ElapsedMilliseconds (sw.ElapsedMilliseconds + swReductionGraph.ElapsedMilliseconds)
+                    printfn "| Size=%i | t_abs=%i ms | #Ref=%i | t_solve=%i ms |" sg.States.Count swReductionGraph.ElapsedMilliseconds iterations sw.ElapsedMilliseconds
                    
                 r
             | NAIVE -> 
                 if List.contains EachStep GlobalConstants.verboseLevel then 
-                    printf "Started the explicit (naive) game construction..."
+                    printf "Started the direct (naive) game construction..."
 
                 let sw = System.Diagnostics.Stopwatch()
                 sw.Start()
@@ -244,7 +244,7 @@ let private checkBeyondDirect (tslist : list<TransitionSystem>) k l (predMap : P
                     printfn "Cumulative time to construct abstraction and solve game: %i ms" (sw.ElapsedMilliseconds + swReductionGraph.ElapsedMilliseconds)
             
                 if List.contains OutputForPaper GlobalConstants.verboseLevel then 
-                    printfn "| t_direct=%i ms |" sw.ElapsedMilliseconds
+                    printfn "| t_solve=%i ms |" sw.ElapsedMilliseconds
 
                 w.Winner
     
@@ -275,7 +275,7 @@ let checkKSafety (tslist : list<TransitionSystem>) (initPredMap : PredicateMap) 
     sw.Stop()
 
     if List.contains OutputForPaper GlobalConstants.verboseLevel then 
-        printfn "| t_total=%i ms |" sw.ElapsedMilliseconds
+        printfn "| t=%i ms |" sw.ElapsedMilliseconds
 
     if List.contains EachStep GlobalConstants.verboseLevel then 
         printfn "Finished solving of the game in %i ms" sw.ElapsedMilliseconds

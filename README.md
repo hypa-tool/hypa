@@ -2,17 +2,17 @@
 
 This repository contains HyPA (short for **Hy**perproperties **P**redicate **A**bstraction), a tool that can verify `\forall^*\exists^*` hyperproperties on infinite-state systems within a given (predicate) abstraction.
 It builds on the theory presented in 
-> Raven Beutner and Bernd Finkbeiner. Software Verification of Hyperproperties beyond k-safety. CAV 2022 [1]
+> Raven Beutner and Bernd Finkbeiner. Software Verification of Hyperproperties Beyond k-Safety. CAV 2022 [1]
 
 
 ## HyPA Overview
 
 HyPA is a tool that can verify hyperproperties on infinite-state systems.
-It specializes on `\forall^k\exists^l` safety hyperproperties (for some `k`, `l`) which state that for all `k` traces there exist `l` traces such that the resulting `k+l` traces do not interact badly. 
+It specializes on `\forall^k\exists^l`-safety hyperproperties (for some `k`, `l`) which state that for all `k` traces there exist `l` traces such that the resulting `k+l` traces do not interact badly. 
 k-safety properties are the *special case* where `l = 0`. 
 
 HyPA reads a symbolic transition system, the hyperproperty to be checked, and a set of predicates and determines if the property can be verified within the given abstraction.
-To this end, HyPA uses the provided predicates to construct an abstraction of the system (parametrized by the scheduling in each step)and turns the abstraction into a game which is subsequently solved.
+To this end, HyPA uses the provided predicates to construct an abstraction of the system (parametrized by the scheduling in each step)and turns the abstraction into a game that is subsequently solved.
 As shown in [1], if the safety player wins the constructed game, the system satisfies the property. 
 
 ## Structure 
@@ -38,19 +38,19 @@ dotnet build -c "release" -o ../app
 cd ..
 ```
 
-Afterwards, the HyPA executable is located in the `app/` folder.
+Afterward, the HyPA executable is located in the `app/` folder.
 Note that the HyPA executable is not standalone and requires the other files located in the `app/` folder.
-In particular, to copy the executable, you need to copy the entire contents of the `app/` folder (we recommend to just leave it where it is).
+In particular, to copy the executable, you need to copy the entire contents of the `app/` folder.
 
 
 ### Build and Connect Z3 
 
 HyPA requires the [Z3](https://github.com/Z3Prover/z3) SMT solver. 
-HyPA is designed such that it only needs to the *path* to the Z3 executable, so everyone can install Z3 whereever it fits them best.
+HyPA is designed such that it only needs to the *path* to the Z3 executable, so everyone can install Z3 wherever it fits them best.
 Either build Z3 yourself or download a prebuilt binary for your architecture (see [here](https://github.com/Z3Prover/z3/releases)).
 
 The absolute path to Z3 is specified in the `config.conf` configuration file.
-This file **must** be located in the same directors as the HyPA executable (this convention makes it easy to find the config file, independent of the relative path HyPA is called from).
+This file **must** be located in the same directory as the HyPA executable (this convention makes it easy to find the config file, independent of the relative path HyPA is called from).
 We already provide a config file `app/config.conf`.
 After having built (or downloaded) Z3, paste the **absolute** path to the Z3 solver into the `config.conf` file.
 For example, if the Z3 binary is `/usr/bin/z3`, change the content of `app/config.conf` to 
@@ -91,7 +91,7 @@ HyPA supports several command line options.
 
 - `-i` sets the path to the verification instance (usually this is a `.hypa` file). The `.hypa` file then points to the system, property and predicates that should be used for this instance. This option is mandatory. See Section [Hypa File](#hypa-file) below, for details on the structure of the `.hypa` file.
 - `-v` determines the verbosity level of HyPA. The available options are 0 (only output the result), 1 (output the data used for evaluation in [1]), 2 (output the result as well as intermediate steps), and 3 (debug output). The `-v` option is optional. If not used, the verbosity level is set to 2 by default. 
-- `-s` sets the solver used by HyPA to solve games for `\forall^*\exists^*` instances (i.e., instances beyond k-safety). Available options are `naive` (to use the naive solver) and `lazy` (to use the more efficient lazy solver, presented in [1]). The `-s` option is optional. If not used, the `lazy` solver is used by default. The solver option is only relevant for properties that use existential quantification, i.e., properties of the form `\forall^k\exists^l` with `l >= 1`. The (default) `lazy` solver is always superior to the `naive` solver, so there is seldom a reason to make use of the `-s` option. 
+- `-s` sets the solver used by HyPA to solve games for `\forall^*\exists^*` instances (i.e., instances beyond k-safety). Available options are `naive` (to use the naive, direct solver) and `lazy` (to use the more efficient lazy solver, presented in [1]). The `-s` option is optional. If not used, the `lazy` solver is used by default. The solver option is only relevant for properties that use existential quantification, i.e., properties of the form `\forall^k\exists^l` with `l >= 1`. The (default) `lazy` solver is always superior to the `naive` solver, so there is seldom a reason to make use of the `-s` option. 
 
 
 ### Hypa File 
@@ -190,12 +190,12 @@ The `[vars]` category defines all variables used in the program (all variables h
 In this case, we start at location 0, with any assignment to the variables (as the formula is `true`). If we would, for example, set `(0: (> x y))` the program can start at location 0 with any variable assignment where `x > y`.
 `[step]` defines the transitions of the program. Each location is associated with a set of outgoing edges.
 Each edge has the form `(g, [A_1, A_2, ...], [x1 x2 ... | F], t)` where `g` is a guard (an SMT formula over the variables), `A_1, A_2, ...` are assignments to variables (for example `y := (- y 1)` decrements `y` by 1).
-`x1 x2 ...` are program variables that are choose non-deterministically, i.e., they can take on any value (they may therefore *not* appear in the left hand side of any assignment).
+`x1 x2 ...` are program variables that are chosen non-deterministically, i.e., they can take on any value (they may therefore *not* appear on the left-hand side of any assignment).
 `F` is a general formula that specifies further restrictions on the post state (by ranging over primed and unprimed variables).
 For most cases, the additional condition `F` and the non-deterministic variables `x1 x2 ...` are not needed. 
 A typical transition thus has the form  `(g, [A_1, A_2, ...], [|], t)`.
-If a variable does not appear on the left-hand-side of any assignment (and not in the list of non-deterministically chosen variables), its value remains unchanged. 
-Lastly `t` is the target location of that transition.
+If a variable does not appear on the left-hand side of any assignment (and not in the list of non-deterministically chosen variables), its value remains unchanged. 
+Lastly, `t` is the target location of that transition.
 
 It should be straightforward to map the above STS to the pseudo program.
 
@@ -238,15 +238,15 @@ The content of `aut` is the following:
 
 We specify a set of states (`[states]`) a set of initial states (`[initial]`) and a set of bad states (`[bad]`).
 We also include the set of variables used (`[vars]`).
-Similar to the definition of a STS, the edges of an automaton are given per state.
-An edges has the form `(g, t)` where `g` is a guard ranging over those variables appearing in `[vars]` and `t` is the target state of that transition.
+Similar to the definition of an STS, the edges of an automaton are given per state.
+An edge has the form `(g, t)` where `g` is a guard ranging over those variables appearing in `[vars]` and `t` is the target state of that transition.
 Note that in an STS all formulas range over variables in that system, whereas the variables in the automaton are annotated by a number that indicates to which copy it refers (i.e, variables have the form `x_i`).
-An automaton accepts a word (a sequence of assignments to the variables), if there exists *no* run that visits a bad state (see [1]).
+An automaton accepts a word (a sequence of assignments to the variables) if there exists *no* run that visits a bad state (see [1]).
 
 #### Specification of Predicates
 
 Lastly, we specify the predicates per location in the product program. 
-Tracking predicates locally allows to reduce the size of the abstract system.
+Tracking predicates locally allows us to reduce the size of the abstract system.
 In our example, `preds` contains the following: 
 
 ```
@@ -279,10 +279,10 @@ For example
 
 sets the predicates for locations `[0 0]` and `[1 1]` at the same time. 
 
-We require that the predicates are precise enough to describes the initial conditions (the formulas used in the `[init]` block of the transition system), the observation formulas (the formulas used in the `[obs]` block of the transition system), and the formulas used in the automaton edges (see [1]).
+We require that the predicates are precise enough to describe the initial conditions (the formulas used in the `[init]` block of the transition system), the observation formulas (the formulas used in the `[obs]` block of the transition system), and the formulas used in the automaton edges (see [1]).
 If the predicates are not precise enough at some location, HyPA will raise an error during evaluation. 
 
 
 ## References
 
-[1] Raven Beutner and Bernd Finkbeiner. Software Verification of Hyperproperties beyond k-safety. CAV 2022
+[1] Raven Beutner and Bernd Finkbeiner. Software Verification of Hyperproperties Beyond k-Safety. CAV 2022
